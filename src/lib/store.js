@@ -1,6 +1,5 @@
-// store.js
 import { configureStore } from "@reduxjs/toolkit";
-import todoReducer from "../todo/todoSlice";
+import todoReducer from "../actions/todoSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "redux";

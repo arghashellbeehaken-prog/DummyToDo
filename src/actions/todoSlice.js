@@ -21,8 +21,7 @@ export const todoSlice = createSlice({
     updateTodo: (state, action) => {
       const { id, text } = action.payload;
       const existingTodo = state.todos.find((todo) => todo.id === id);
-      if (existingTodo) existingTodo.text = text; // will ofcourse find this
-      else state.todos.push({ id: id ?? nanoid(), text });
+      existingTodo.text = text;
     },
   },
 });

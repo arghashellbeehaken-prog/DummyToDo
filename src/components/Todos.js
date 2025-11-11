@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeTodo, updateTodo, addTodo } from "../todo/todoSlice";
+import { addTodo, updateTodo, removeTodo } from "../actions/todoSlice";
+import TodoList from "./TodoList";
+import TodoModal from "./TodoModal";
 
 function Todos() {
   const todos = useSelector((state) => state.todos.todos);
@@ -28,11 +30,17 @@ function Todos() {
     e.preventDefault();
     if (input.trim() === "") return;
 
-    dispatch(isUpdateMode ? updateTodo({ id: currentId, text: input }) : addTodo(input));
+    if (isUpdateMode) {
+      dispatch(updateTodo({ id: currentId, text: input }));
+    } else {
+      dispatch(addTodo(input));
+    }
 
     setShowModal(false);
     setInput("");
   };
+
+  const handleDelete = (id) => dispatch(removeTodo(id));
 
   return (
     <div className="todos-container">
@@ -41,43 +49,16 @@ function Todos() {
         + Add Todo
       </button>
 
-      <ul className="todo-list">
-        {todos.map((todo) => (
-          <li key={todo.id} className="todo-item">
-            {todo.text}
-            <div>
-              <button onClick={() => dispatch(removeTodo(todo.id))} className="delete-btn">
-                Delete
-              </button>
-              <button onClick={() => handleUpdate(todo)} className="update-btn">
-                Update
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <TodoList todos={todos} onDelete={handleDelete} onUpdate={handleUpdate} />
 
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <h2>{isUpdateMode ? "Update Todo" : "Add New Todo"}</h2>
-            <form onSubmit={handleSubmit} className="modal-form">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Enter todo title"
-                autoFocus
-              />
-              <div className="modal-actions">
-                <button type="submit">{isUpdateMode ? "Update" : "Add"}</button>
-                <button type="button" onClick={() => setShowModal(false)}>
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <TodoModal
+          isUpdateMode={isUpdateMode}
+          input={input}
+          setInput={setInput}
+          onSubmit={handleSubmit}
+          onClose={() => setShowModal(false)}
+        />
       )}
     </div>
   );

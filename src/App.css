@@ -16,12 +16,13 @@ input {
 }
 
 .add-btn {
-  background-color: #007bff;
+  background-color: #05254b;
   color: white;
   border: none;
   padding: 10px 15px;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 900;
 }
 
 .todo-list {
@@ -35,8 +36,11 @@ input {
   margin: 10px auto;
   padding: 10px 15px;
   border-radius: 8px;
-  width: 300px;
+  width: 500px;
   display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  text-wrap: inherit;
   justify-content: space-between;
   align-items: center;
 }
@@ -100,7 +104,7 @@ input {
 }
 
 .modal-actions button:first-child {
-  background-color: #007bff;
+  background-color: #021930;
   color: white;
 }
 
