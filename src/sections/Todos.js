@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addTodo, updateTodo } from "../actions/todoSlice";
 import TodoList from "./TodoList";
 import TodoModal from "../components/TodoModal";
+import { TODO_MAX_LENGTH } from "../utils/constants";
 
 const Todos = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const Todos = () => {
           setInput={setInput}
           onSubmit={handleSubmit}
           onClose={() => setShowModal(false)}
-          maxLength={100}
+          maxLength={TODO_MAX_LENGTH}
         />
       )}
     </div>
