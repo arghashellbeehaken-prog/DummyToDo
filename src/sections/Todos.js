@@ -1,36 +1,31 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addTodo, updateTodo, removeTodo } from "../actions/todoSlice";
+import { useDispatch } from "react-redux";
+import { addTodo, updateTodo } from "../actions/todoSlice";
 import TodoList from "./TodoList";
-import TodoModal from "./TodoModal";
+import TodoModal from "../components/TodoModal";
 
-function Todos() {
-  const todos = useSelector((state) => state.todos.todos);
+const Todos = () => {
   const dispatch = useDispatch();
-
   const [showModal, setShowModal] = useState(false);
-  const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [input, setInput] = useState("");
   const [currentId, setCurrentId] = useState(null);
 
   const handleAdd = () => {
-    setIsUpdateMode(false);
-    setInput("");
+    setCurrentId(null);
     setShowModal(true);
   };
 
-  const handleUpdate = (todo) => {
-    setIsUpdateMode(true);
-    setCurrentId(todo.id);
-    setInput(todo.text);
+  const handleUpdate = ({ id, text }) => {
+    setCurrentId(id);
+    setInput(text);
     setShowModal(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (input.trim() === "") return;
+    if (!input.trim()) return;
 
-    if (isUpdateMode) {
+    if (currentId) {
       dispatch(updateTodo({ id: currentId, text: input }));
     } else {
       dispatch(addTodo(input));
@@ -38,9 +33,8 @@ function Todos() {
 
     setShowModal(false);
     setInput("");
+    setCurrentId(null);
   };
-
-  const handleDelete = (id) => dispatch(removeTodo(id));
 
   return (
     <div className="todos-container">
@@ -48,20 +42,18 @@ function Todos() {
       <button onClick={handleAdd} className="add-btn">
         + Add Todo
       </button>
-
-      <TodoList todos={todos} onDelete={handleDelete} onUpdate={handleUpdate} />
-
+      <TodoList onUpdate={handleUpdate} />
       {showModal && (
         <TodoModal
-          isUpdateMode={isUpdateMode}
           input={input}
           setInput={setInput}
           onSubmit={handleSubmit}
           onClose={() => setShowModal(false)}
+          maxLength={100}
         />
       )}
     </div>
   );
-}
+};
 
 export default Todos;

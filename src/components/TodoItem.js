@@ -1,7 +1,7 @@
-function TodoItem({ todo, onDelete, onUpdate }) {
+const TodoItem = ({ text, onDelete, onUpdate }) => {
   return (
     <li className="todo-item">
-      <span>{todo.text}</span>
+      <span>{text}</span>
       <div className="todo-actions">
         <button onClick={onUpdate} className="update-btn">
           Update
@@ -12,6 +12,6 @@ function TodoItem({ todo, onDelete, onUpdate }) {
       </div>
     </li>
   );
-}
+};
 
 export default TodoItem;

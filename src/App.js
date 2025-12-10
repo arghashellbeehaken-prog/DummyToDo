@@ -1,13 +1,7 @@
-import "./App.css";
-import Todos from "./components/Todos";
+import HomePage from "./pages/HomePage";
 
-function App() {
-  return (
-    <div className="App">
-      <h1 className="welcomeTitle">Hello! Welcome to Divyo's TO-DO</h1>
-      <Todos />
-    </div>
-  );
-}
+const App = () => {
+  return <HomePage />;
+};
 
 export default App;
