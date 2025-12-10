@@ -11,16 +11,10 @@ const Todos = () => {
   const [input, setInput] = useState("");
   const [currentId, setCurrentId] = useState(null);
 
-  const closeModal = () => {
-    setCurrentId(null);
-    setInput("");
-    setShowModal(false);
-  };
-
-  const handleUpdate = ({ id, text }) => {
+  const toggleModal = (id = null, text = "") => {
     setCurrentId(id);
     setInput(text);
-    setShowModal(true);
+    setShowModal(!showModal);
   };
 
   const handleSubmit = (e) => {
@@ -30,7 +24,7 @@ const Todos = () => {
     if (currentId) dispatch(updateTodo({ id: currentId, text: input }));
     else dispatch(addTodo(input));
 
-    closeModal();
+    toggleModal();
   };
 
   return (
@@ -41,7 +35,7 @@ const Todos = () => {
         + Add Todo
       </button>
 
-      <TodoList onUpdate={handleUpdate} />
+      <TodoList toggleModal={toggleModal} />
 
       {showModal && (
         <TodoModal
@@ -49,7 +43,7 @@ const Todos = () => {
           id={currentId}
           setInput={setInput}
           onSubmit={handleSubmit}
-          onClose={closeModal}
+          onClose={toggleModal}
         />
       )}
     </div>

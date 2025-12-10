@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import TodoItem from "../components/TodoItem";
 import { removeTodo } from "../actions/todoSlice";
 
-const TodoList = ({ onUpdate }) => {
+const TodoList = ({ toggleModal }) => {
   const todos = useSelector((state) => state.todos.todos);
   const dispatch = useDispatch();
 
@@ -15,11 +15,11 @@ const TodoList = ({ onUpdate }) => {
           key={id}
           text={text}
           onDelete={() => dispatch(removeTodo(id))}
-          onUpdate={() => onUpdate({ id, text })}
+          onUpdate={() => toggleModal(id, text)}
         />
       ))}
     </ul>
   );
-}
+};
 
 export default TodoList;
