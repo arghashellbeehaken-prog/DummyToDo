@@ -14,7 +14,7 @@ const Todos = () => {
   const toggleModal = (id = null, text = "") => {
     setCurrentId(id);
     setInput(text);
-    setShowModal(!showModal);
+    setShowModal((showModal) => !showModal);
   };
 
   const handleSubmit = (e) => {
@@ -31,7 +31,7 @@ const Todos = () => {
     <div className="todos-container">
       <h1 className="heading">Todo List</h1>
 
-      <button onClick={() => setShowModal(true)} className="add-btn">
+      <button onClick={() => setShowModal((showModal) => true)} className="add-btn">
         + Add Todo
       </button>
 

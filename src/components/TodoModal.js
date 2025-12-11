@@ -2,7 +2,7 @@ import { TODO_MAX_LENGTH } from "../utils/constants";
 
 const TodoModal = ({ input, id, setInput, onSubmit, onClose }) => {
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={() => onClose()}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <h2>{id ? "Update Todo" : "Add New Todo"}</h2>
         <form onSubmit={onSubmit} className="modal-form">
@@ -15,8 +15,8 @@ const TodoModal = ({ input, id, setInput, onSubmit, onClose }) => {
             maxLength={TODO_MAX_LENGTH}
           />
           <div className="modal-actions">
-            <button type="submit">{id? "Update" : "Add"}</button>
-            <button type="button" onClick={onClose}>
+            <button type="submit">{id ? "Update" : "Add"}</button>
+            <button type="button" onClick={() => onClose()}>
               Cancel
             </button>
           </div>
